@@ -41,8 +41,8 @@ data class Player(
     var birthday: Int = 0,
 ) {
     private val nameSegments by lazy {name!!.split(", ")}
-    private val firstname: String by lazy { if (nameSegments.size >= 2) nameSegments[1] else "" }
-    private val surname: String by lazy { if (nameSegments.isNotEmpty()) nameSegments[0] else "" }
+    private val firstname: String by lazy { if (nameSegments.size >= 2) nameSegments[1].trim() else "" }
+    private val surname: String by lazy { if (nameSegments.isNotEmpty()) nameSegments[0].trim() else "" }
 
     fun isFemale() = flag == "w"
     fun isActive() = flag in setOf(null, "w")
