@@ -10,12 +10,11 @@ import org.simpleframework.xml.core.Persister
 import java.io.File
 
 class FideDataReader(
-    private val fileName: String
+    private val ratingsFile: File
 ) {
 
     fun readPlayersRatingsFromLocalFile(): List<Player> {
-        val file = File(fileName)
-        val dataFetch = Persister().read(Players::class.java, file)
+        val dataFetch = Persister().read(Players::class.java, ratingsFile)
         return dataFetch.players ?: emptyList()
     }
 }
@@ -26,7 +25,7 @@ data class Player(
     var name: String? = null,
 
     @field:Element(name = "country")
-    var country: String? = null,
+    var countryOrig: String? = null,
 
     @field:Element(name = "sex")
     var sex: String? = null,
@@ -44,10 +43,12 @@ data class Player(
     private val firstname: String by lazy { if (nameSegments.size >= 2) nameSegments[1].trim() else "" }
     private val surname: String by lazy { if (nameSegments.isNotEmpty()) nameSegments[0].trim() else "" }
 
+    val country: String? get() = if (countryOrig?.contains("FID") == true) "RUS" else countryOrig
+
     fun isFemale() = flag == "w"
     fun isActive() = flag in setOf(null, "w")
     fun isJunior() = birthday > juniorLimitYear
-    fun fullName () = "$firstname $surname"
+    fun fullName () = "$firstname $surname".trim()
 
     override fun toString() = "$firstname $surname, $country, $rating"
 

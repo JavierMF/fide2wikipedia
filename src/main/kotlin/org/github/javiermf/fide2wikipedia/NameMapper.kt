@@ -16,7 +16,8 @@ class NameMapper {
         "Zhongyi Tan" to "Tan Zhongyi",
         "Wenjun Ju" to "Ju Wenjun",
         "Hans Moke Niemann" to "Hans Niemann",
-        "Tingjie Lei" to "Lei Tingjie"
+        "Tingjie Lei" to "Lei Tingjie",
+        "Harika Dronavalli" to "Dronavalli Harika"
     )
 
     fun mapName(name:String) = nameMappings[name] ?: name
