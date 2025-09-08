@@ -1,13 +1,11 @@
 package org.github.javiermf.fide2wikipedia
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.core.Persister
 import java.io.File
+import java.time.LocalDate
 
 class FideDataReader(
     private val ratingsFile: File
@@ -53,7 +51,7 @@ data class Player(
     override fun toString() = "$firstname $surname, $country, $rating"
 
     companion object {
-        private val currentYear = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).year
+        private val currentYear = LocalDate.now().year
         val juniorLimitYear = currentYear - 21
     }
 }

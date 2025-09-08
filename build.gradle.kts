@@ -1,0 +1,38 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    kotlin("jvm") version "2.2.0"
+    application
+}
+
+group = "org.github.javiermf"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.simpleframework:simple-xml:2.7.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.13.4")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:6.0.2")
+}
+
+application {
+    mainClass.set("org.github.javiermf.fide2wikipedia.Fide2WikipediaKt")
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_14)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
