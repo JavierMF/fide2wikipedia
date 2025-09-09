@@ -1,5 +1,6 @@
-package org.github.javiermf.fide2wikipedia
+package org.github.javiermf.fide2wikipedia.adapter.input.cli
 
+import org.github.javiermf.fide2wikipedia.domain.model.GameStyle
 import java.io.File
 
 class FilesLister (dirPath: String)

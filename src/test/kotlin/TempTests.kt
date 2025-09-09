@@ -1,7 +1,7 @@
 import io.kotest.matchers.shouldBe
-import org.github.javiermf.fide2wikipedia.GameStyle
-import org.github.javiermf.fide2wikipedia.SectionDefinition
-import org.github.javiermf.fide2wikipedia.WikiTableWriter
+import org.github.javiermf.fide2wikipedia.domain.model.GameStyle
+import org.github.javiermf.fide2wikipedia.adapter.output.wikipedia.SectionDefinition
+import org.github.javiermf.fide2wikipedia.adapter.output.wikipedia.WikiTableWriter
 import org.junit.jupiter.api.Test
 
 class TempTests {

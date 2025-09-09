@@ -1,4 +1,4 @@
-package org.github.javiermf.fide2wikipedia
+package org.github.javiermf.fide2wikipedia.domain.model
 
 enum class GameStyle(
     val title: String,

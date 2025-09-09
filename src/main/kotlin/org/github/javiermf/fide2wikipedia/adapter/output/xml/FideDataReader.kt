@@ -1,19 +1,27 @@
-package org.github.javiermf.fide2wikipedia
+package org.github.javiermf.fide2wikipedia.adapter.output.xml
 
+import org.github.javiermf.fide2wikipedia.domain.port.input.FideDataReaderPort
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.core.Persister
 import java.io.File
 import java.time.LocalDate
+import org.github.javiermf.fide2wikipedia.domain.model.Player as DomainPlayer // Alias for domain Player
 
-class FideDataReader(
-    private val ratingsFile: File
-) {
+class FideDataReader() : FideDataReaderPort {
 
-    fun readPlayersRatingsFromLocalFile(): List<Player> {
-        val dataFetch = Persister().read(Players::class.java, ratingsFile)
-        return dataFetch.players ?: emptyList()
+    override fun readFideData(filePath: String): List<DomainPlayer> {
+        val dataFetch = Persister().read(Players::class.java, File(filePath))
+        return dataFetch.players?.map {
+            DomainPlayer(
+                name = it.name ?: "",
+                country = it.country ?: "",
+                sex = it.sex ?: "",
+                rating = it.rating ?: 0,
+                birthday = it.birthday
+            )
+        } ?: emptyList()
     }
 }
 

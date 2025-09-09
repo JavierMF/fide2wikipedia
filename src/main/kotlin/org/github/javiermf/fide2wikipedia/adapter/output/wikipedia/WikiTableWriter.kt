@@ -1,5 +1,9 @@
-package org.github.javiermf.fide2wikipedia
+package org.github.javiermf.fide2wikipedia.adapter.output.wikipedia
 
+import org.github.javiermf.fide2wikipedia.domain.model.GameStyle
+import org.github.javiermf.fide2wikipedia.domain.model.Player
+import org.github.javiermf.fide2wikipedia.domain.service.NameMapper
+import org.github.javiermf.fide2wikipedia.util.appenderStream
 import java.io.BufferedWriter
 import java.io.File
 import java.time.LocalDateTime
