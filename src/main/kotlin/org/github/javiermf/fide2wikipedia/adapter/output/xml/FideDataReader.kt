@@ -12,16 +12,21 @@ import org.github.javiermf.fide2wikipedia.domain.model.Player as DomainPlayer //
 class FideDataReader() : FideDataReaderPort {
 
     override fun readFideData(filePath: String): List<DomainPlayer> {
-        val dataFetch = Persister().read(Players::class.java, File(filePath))
-        return dataFetch.players?.map {
-            DomainPlayer(
-                name = it.name ?: "",
-                country = it.country ?: "",
-                sex = it.sex ?: "",
-                rating = it.rating ?: 0,
-                birthday = it.birthday
-            )
-        } ?: emptyList()
+        return try {
+            val dataFetch = Persister().read(Players::class.java, File(filePath))
+            dataFetch.players?.map {
+                DomainPlayer(
+                    name = it.name ?: "",
+                    country = it.country ?: "",
+                    sex = it.sex ?: "",
+                    rating = it.rating ?: 0,
+                    birthday = it.birthday
+                )
+            } ?: emptyList()
+        } catch (e: Exception) {
+            // Log the exception if necessary
+            emptyList()
+        }
     }
 }
 

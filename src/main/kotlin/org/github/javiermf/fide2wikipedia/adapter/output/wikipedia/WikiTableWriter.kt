@@ -19,7 +19,7 @@ class WikiTableWriter(
 
     private fun writeSectionHeader(section: SectionDefinition) {
         val sectionDesc = sectionDescGenerator(section, gameStyle)
-        val dateFormat = DateTimeFormatter.ofPattern("dd-mm-yyyy", Locale.forLanguageTag("ES"))
+        val dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("ES"))
         val todayDesc = dateFormat.format(LocalDateTime.now())
         val sectionHeader = """
     ==== ${section.title} ====
@@ -39,10 +39,11 @@ class WikiTableWriter(
         outputFile.appenderStream()
             .use { out ->
                 writeWikiTableHeader(out)
-                players
+                val topPlayers = players
                     .filter(filterFunc)
                     .sortedByDescending { it.rating }
-                    .subList(0, NUMBER_OF_TOP_PLAYERS)
+                
+                topPlayers.take(NUMBER_OF_TOP_PLAYERS) // Use take() for safe sublisting
                     .forEachIndexed { index, player -> writePlayerRow(out, index, player) }
                 writeWikiTableFooter(out)
             }
