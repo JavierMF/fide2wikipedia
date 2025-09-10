@@ -4,15 +4,14 @@ import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.core.Persister
-import org.github.javiermf.fide2wikipedia.domain.service.FideDataReader
 import java.io.File
 import java.time.LocalDate
 import org.github.javiermf.fide2wikipedia.domain.model.Player as DomainPlayer // Alias for domain Player
 
-class FideDataXMLReader : FideDataReader {
+class FideDataXMLReader {
 
-    override fun readFideData(filePath: String): List<DomainPlayer> {
-        return try {
+    fun readFideData(filePath: String): List<DomainPlayer> =
+        try {
             val dataFetch = Persister().read(Players::class.java, File(filePath))
             dataFetch.players?.map {
                 DomainPlayer(
@@ -27,7 +26,6 @@ class FideDataXMLReader : FideDataReader {
             // Log the exception if necessary
             emptyList()
         }
-    }
 }
 
 @Root(strict = false, name = "player")

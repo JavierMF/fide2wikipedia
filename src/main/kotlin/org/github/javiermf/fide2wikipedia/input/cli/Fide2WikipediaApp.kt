@@ -2,6 +2,8 @@ package org.github.javiermf.fide2wikipedia.input.cli
 
 import org.github.javiermf.fide2wikipedia.domain.GenerateWikipediaTableFromFideRatingsUseCase
 import org.github.javiermf.fide2wikipedia.infrastructure.filereader.FideDataXMLReader
+import org.github.javiermf.fide2wikipedia.infrastructure.filereader.FilesLister
+import org.github.javiermf.fide2wikipedia.infrastructure.filereader.GameStylePlayersRetrieverLocal
 import org.github.javiermf.fide2wikipedia.infrastructure.filewriter.OutputLocalFileWriter
 import java.io.File
 import kotlin.system.exitProcess
@@ -16,8 +18,10 @@ fun main(args: Array<String>) {
     val folderPath = args.first()
 
     GenerateWikipediaTableFromFideRatingsUseCase(
-        dirWithRatingFiles =  folderPath,
-        fideDataReader = FideDataXMLReader(),
+        playersRetriever = GameStylePlayersRetrieverLocal(
+            filesLister = FilesLister(folderPath),
+            fideDataXMLReader = FideDataXMLReader()
+        ),
         outputWriter = OutputLocalFileWriter(File("output.txt"))
     ).generate()
 
