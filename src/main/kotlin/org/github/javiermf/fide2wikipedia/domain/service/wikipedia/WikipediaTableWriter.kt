@@ -6,10 +6,11 @@ import org.github.javiermf.fide2wikipedia.domain.model.SectionContents
 import org.github.javiermf.fide2wikipedia.domain.model.SectionDefinition
 import org.github.javiermf.fide2wikipedia.domain.service.NameMapper
 import org.github.javiermf.fide2wikipedia.domain.service.OutputFileWriter
+import java.time.Clock
 
 class WikipediaTableWriter(
-    private val nameMapper: NameMapper,
-    private val output: OutputFileWriter
+    private val output: OutputFileWriter,
+    private val clock: Clock
 ) {
 
     fun writeGameStyleSection(gameStyle: GameStyle, players: List<Player>) {
@@ -17,15 +18,15 @@ class WikipediaTableWriter(
 
         output.writeContent("=== <u>${gameStyle.title}</u> ===\n")
 
-        val wikiTableWriter = WikiTableWriter(output, nameMapper)
+        val wikiTableWriter = WikiTableWriter(output, NameMapper(), clock)
         println("Writing open rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_TOP, gameStyle))
+        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_TOP, gameStyle, clock))
         println("Writing women rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_TOP, gameStyle))
+        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_TOP, gameStyle, clock))
         println("Writing junior open rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_JUV, gameStyle))
+        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_JUV, gameStyle, clock))
         println("Writing women open rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_JUV, gameStyle))
+        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_JUV, gameStyle, clock))
         println("Finished")
     }
 }

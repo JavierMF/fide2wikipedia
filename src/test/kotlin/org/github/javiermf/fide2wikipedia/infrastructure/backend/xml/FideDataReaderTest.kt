@@ -48,6 +48,57 @@ class FideDataReaderTest {
     }
 
     @Test
+    fun `readFideData reads female player from XML file`() {
+        val xmlContent = """
+            <playerslist>
+                <player>
+                    <fideid>88180085</fideid>
+                    <name>Aadhira V</name>
+                    <country>IND</country>
+                    <sex>F</sex>
+                    <title></title>
+                    <w_title></w_title>
+                    <o_title></o_title>
+                    <foa_title></foa_title>
+                    <rating>1415</rating>
+                    <games>0</games>
+                    <k>40</k>
+                    <birthday>2011</birthday>
+                    <flag>w</flag>
+                </player>
+                <player>
+                    <fideid>25101242</fideid>
+                    <name>Aadhiseshan K</name>
+                    <country>IND</country>
+                    <sex>M</sex>
+                    <title></title>
+                    <w_title></w_title>
+                    <o_title></o_title>
+                    <foa_title></foa_title>
+                    <rating>1499</rating>
+                    <games>0</games>
+                    <k>20</k>
+                    <birthday>2005</birthday>
+                    <flag>i</flag>
+                </player>
+            </playerslist>
+        """.trimIndent()
+
+        val tempFile = File(tempDir, "ratings.xml")
+        tempFile.writeText(xmlContent)
+
+        val reader = FideDataXMLReader()
+        val players = reader.readFideData(tempFile.absolutePath)
+
+        players.size shouldBe 2
+        players[0].name shouldBe "Aadhira V"
+        players[0].country shouldBe "IND"
+        players[0].sex shouldBe "F"
+        players[0].rating shouldBe 1415
+        players[0].birthday shouldBe 2011
+    }
+
+    @Test
     fun `readFideData returns empty list for empty XML`() {
         val xmlContent = """
             <playerslist>

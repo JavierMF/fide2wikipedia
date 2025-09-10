@@ -2,7 +2,9 @@ package org.github.javiermf.fide2wikipedia.domain.model
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneId
 
 class PlayerTest {
 
@@ -21,21 +23,21 @@ class PlayerTest {
     @Test
     fun `isActive returns true`() {
         val player = Player("Carl", "USA", "M", 2800, 1990)
-        player.isActive() shouldBe true
+        player.isActive shouldBe true
     }
 
     @Test
     fun `isJunior returns true for junior player`() {
-        val currentYear = LocalDate.now().year
-        val juniorPlayer = Player("Junior", "ESP", "M", 2000, currentYear - 10) // 10 years old
-        juniorPlayer.isJunior() shouldBe true
+        val clock = Clock.fixed(Instant.parse("2024-01-01T10:00:00Z"), ZoneId.of("UTC"))
+        val juniorPlayer = Player("Junior", "ESP", "M", 2000, 2014) // 10 years old in 2024
+        juniorPlayer.isJunior(clock) shouldBe true
     }
 
     @Test
     fun `isJunior returns false for adult player`() {
-        val currentYear = LocalDate.now().year
-        val adultPlayer = Player("Adult", "GER", "F", 2200, currentYear - 25) // 25 years old
-        adultPlayer.isJunior() shouldBe false
+        val clock = Clock.fixed(Instant.parse("2024-01-01T10:00:00Z"), ZoneId.of("UTC"))
+        val adultPlayer = Player("Adult", "GER", "F", 2200, 1999) // 25 years old in 2024
+        adultPlayer.isJunior(clock) shouldBe false
     }
 
     @Test

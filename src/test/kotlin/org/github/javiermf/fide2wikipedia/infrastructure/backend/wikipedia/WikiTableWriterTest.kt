@@ -11,6 +11,9 @@ import org.github.javiermf.fide2wikipedia.domain.service.wikipedia.WikiTableWrit
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneId
 
 class WikiTableWriterTest {
 
@@ -28,16 +31,17 @@ class WikiTableWriterTest {
 
     @Test
     fun `writeSection writes correct header and table for OPEN_TOP`() {
+        val clock = Clock.fixed(Instant.parse("2024-01-01T10:00:00Z"), ZoneId.of("UTC"))
         val outputFile = File(tempDir, "output.txt")
         val players = createDummyPlayers(3)
-        val writer = WikiTableWriter(OutputLocalFileWriter(outputFile),  nameMapper)
+        val writer = WikiTableWriter(OutputLocalFileWriter(outputFile),  nameMapper, clock)
 
-        writer.writeSection(SectionContents(players, SectionDefinition.OPEN_TOP, gameStyle))
+        writer.writeSection(SectionContents(players, SectionDefinition.OPEN_TOP, gameStyle, clock))
 
         val content = outputFile.readText()
         content shouldBe """
     ==== Abierto ====
-    Los 20 primeros jugadores de ajedrez del mundo en septiembre de 2025.<ref name=":0">{{Cita web|url=https://ratings.fide.com/top_lists.phtml|título=FIDE Ratings|fechaacceso=10-09-2025|sitioweb=ratings.fide.com}}</ref>
+    Los 20 primeros jugadores de ajedrez del mundo en enero de 2024.<ref name=":0">{{Cita web|url=https://ratings.fide.com/top_lists.phtml|título=FIDE Ratings|fechaacceso=01-01-2024|sitioweb=ratings.fide.com}}</ref>
 
     {| class="wikitable"
     |-

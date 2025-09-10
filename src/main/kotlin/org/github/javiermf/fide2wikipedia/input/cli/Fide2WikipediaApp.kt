@@ -6,6 +6,7 @@ import org.github.javiermf.fide2wikipedia.infrastructure.filereader.FilesLister
 import org.github.javiermf.fide2wikipedia.infrastructure.filereader.GameStylePlayersRetrieverLocal
 import org.github.javiermf.fide2wikipedia.infrastructure.filewriter.OutputLocalFileWriter
 import java.io.File
+import java.time.Clock
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
@@ -16,13 +17,15 @@ fun main(args: Array<String>) {
     }
 
     val folderPath = args.first()
+    val clock = Clock.systemDefaultZone()
 
     GenerateWikipediaTableFromFideRatingsUseCase(
         playersRetriever = GameStylePlayersRetrieverLocal(
             filesLister = FilesLister(folderPath),
             fideDataXMLReader = FideDataXMLReader()
         ),
-        outputWriter = OutputLocalFileWriter(File("output.txt"))
+        outputWriter = OutputLocalFileWriter(File("output.txt")),
+        clock = clock
     ).generate()
 
 }

@@ -1,5 +1,6 @@
 package org.github.javiermf.fide2wikipedia.domain.service.wikipedia
 
+import java.time.Clock
 import org.github.javiermf.fide2wikipedia.domain.model.Player
 import org.github.javiermf.fide2wikipedia.domain.model.SectionContents
 import org.github.javiermf.fide2wikipedia.domain.service.NameMapper
@@ -11,6 +12,7 @@ import java.util.Locale
 class WikiTableWriter(
     private val outputWriter: OutputFileWriter,
     private val nameMapper: NameMapper,
+    private val clock: Clock
 ) {
 
     fun writeSection(sectionContents: SectionContents) {
@@ -19,6 +21,7 @@ class WikiTableWriter(
     }
 
     private fun writeSectionHeader(sectionData: SectionContents) {
+        val todayDesc: String = dateFormat.format(LocalDateTime.now(clock))
         val sectionHeader = """
     ==== ${sectionData.title} ====
     ${sectionData.sectionDescription}<ref name=":0">{{Cita web|url=https://ratings.fide.com/top_lists.phtml|título=FIDE Ratings|fechaacceso=$todayDesc|sitioweb=ratings.fide.com}}</ref>
@@ -60,6 +63,5 @@ class WikiTableWriter(
 """.trimIndent()
         const val WIKI_TABLE_FOOTER = "|}\n"
         val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("ES"))
-        val todayDesc: String = dateFormat.format(LocalDateTime.now())
     }
 }

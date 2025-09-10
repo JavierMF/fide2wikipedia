@@ -5,7 +5,6 @@ import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.core.Persister
 import java.io.File
-import java.time.LocalDate
 import org.github.javiermf.fide2wikipedia.domain.model.Player as DomainPlayer // Alias for domain Player
 
 class FideDataXMLReader {
@@ -19,7 +18,8 @@ class FideDataXMLReader {
                     country = it.country ?: "",
                     sex = it.sex ?: "",
                     rating = it.rating ?: 0,
-                    birthday = it.birthday
+                    birthday = it.birthday,
+                    isActive = it.isActive
                 )
             } ?: emptyList()
         } catch (e: Exception) {
@@ -54,17 +54,9 @@ data class Player(
 
     val country: String? get() = if (countryOrig?.contains("FID") == true) "RUS" else countryOrig
 
-    fun isFemale() = flag == "w"
-    fun isActive() = flag in setOf(null, "w")
-    fun isJunior() = birthday > juniorLimitYear
-    fun fullName () = "$firstname $surname".trim()
+    val isActive: Boolean get() = flag != "i"
 
     override fun toString() = "$firstname $surname, $country, $rating"
-
-    companion object {
-        private val currentYear = LocalDate.now().year
-        val juniorLimitYear = currentYear - 21
-    }
 }
 
 @Root(strict = false, name = "playerslist")

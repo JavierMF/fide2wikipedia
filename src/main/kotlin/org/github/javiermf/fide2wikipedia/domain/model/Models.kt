@@ -1,5 +1,7 @@
 package org.github.javiermf.fide2wikipedia.domain.model
 
+import java.time.Clock
+
 enum class GameStyle(
     val title: String,
     val writingName: String
@@ -17,10 +19,10 @@ enum class SectionDefinition(
     val genre: Genre,
     val age: Age,
     val title: String,
-    val filterFunc: (p: Player) -> Boolean)
+    val filterFunc: (p: Player, clock: Clock) -> Boolean)
 {
-    OPEN_TOP(Genre.OPEN, Age.OPEN, "Abierto", { player -> player.isActive() }),
-    FEM_TOP(Genre.FEMALE, Age.OPEN, "Femenino", { player -> player.isFemale() }),
-    OPEN_JUV(Genre.OPEN, Age.JUVENILE, "Juvenil", { player -> player.isActive() && player.isJunior() }),
-    FEM_JUV(Genre.FEMALE, Age.JUVENILE, "Juvenil femenino", { player -> player.isFemale() && player.isJunior() }),
+    OPEN_TOP(Genre.OPEN, Age.OPEN, "Abierto", { player, _ -> player.isActive }),
+    FEM_TOP(Genre.FEMALE, Age.OPEN, "Femenino", { player, _ -> player.isFemale() }),
+    OPEN_JUV(Genre.OPEN, Age.JUVENILE, "Juvenil", { player, clock -> player.isActive && player.isJunior(clock) }),
+    FEM_JUV(Genre.FEMALE, Age.JUVENILE, "Juvenil femenino", { player, clock -> player.isFemale() && player.isJunior(clock) }),
 }
