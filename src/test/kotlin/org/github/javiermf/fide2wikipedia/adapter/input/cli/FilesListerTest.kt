@@ -2,6 +2,7 @@ package org.github.javiermf.fide2wikipedia.adapter.input.cli
 
 import io.kotest.matchers.shouldBe
 import org.github.javiermf.fide2wikipedia.domain.model.GameStyle
+import org.github.javiermf.fide2wikipedia.infrastructure.filereader.FilesLister
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
@@ -42,7 +43,7 @@ class FilesListerTest {
         val exception = org.junit.jupiter.api.assertThrows<RuntimeException> {
             FilesLister(tempFile.absolutePath)
         }
-        exception.message shouldBe "${tempFile.absolutePath} must a directory"
+        exception.message shouldBe "${tempFile.absolutePath} must be a directory"
     }
 
     @Test

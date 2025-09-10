@@ -1,15 +1,15 @@
-package org.github.javiermf.fide2wikipedia.adapter.output.xml
+package org.github.javiermf.fide2wikipedia.infrastructure.filereader
 
-import org.github.javiermf.fide2wikipedia.domain.port.input.FideDataReaderPort
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.core.Persister
+import org.github.javiermf.fide2wikipedia.domain.service.FideDataReader
 import java.io.File
 import java.time.LocalDate
 import org.github.javiermf.fide2wikipedia.domain.model.Player as DomainPlayer // Alias for domain Player
 
-class FideDataReader() : FideDataReaderPort {
+class FideDataXMLReader : FideDataReader {
 
     override fun readFideData(filePath: String): List<DomainPlayer> {
         return try {

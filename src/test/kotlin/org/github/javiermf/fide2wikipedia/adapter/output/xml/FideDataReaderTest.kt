@@ -1,6 +1,7 @@
-package org.github.javiermf.fide2wikipedia.adapter.output.xml
+package org.github.javiermf.fide2wikipedia.infrastructure.backend.xml
 
 import io.kotest.matchers.shouldBe
+import org.github.javiermf.fide2wikipedia.infrastructure.filereader.FideDataXMLReader
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
@@ -34,7 +35,7 @@ class FideDataReaderTest {
         val tempFile = File(tempDir, "ratings.xml")
         tempFile.writeText(xmlContent)
 
-        val reader = FideDataReader()
+        val reader = FideDataXMLReader()
         val players = reader.readFideData(tempFile.absolutePath)
 
         players.size shouldBe 2
@@ -56,7 +57,7 @@ class FideDataReaderTest {
         val tempFile = File(tempDir, "empty_ratings.xml")
         tempFile.writeText(xmlContent)
 
-        val reader = FideDataReader()
+        val reader = FideDataXMLReader()
         val players = reader.readFideData(tempFile.absolutePath)
 
         players.size shouldBe 0
@@ -64,7 +65,7 @@ class FideDataReaderTest {
 
     @Test
     fun `readFideData returns empty list for non-existent file`() {
-        val reader = FideDataReader()
+        val reader = FideDataXMLReader()
         val players = reader.readFideData("non_existent.xml")
 
         players.size shouldBe 0
