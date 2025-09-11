@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class WikiTableWriter(
+class GameSectionTableWriter(
     private val outputWriter: OutputFileWriter,
     private val nameMapper: NameMapper,
     private val clock: Clock
@@ -61,7 +61,7 @@ class WikiTableWriter(
     ! ELO
     
 """.trimIndent()
-        const val WIKI_TABLE_FOOTER = "|}\n"
+        const val WIKI_TABLE_FOOTER = "|}\n\n"
         val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("ES"))
     }
 }

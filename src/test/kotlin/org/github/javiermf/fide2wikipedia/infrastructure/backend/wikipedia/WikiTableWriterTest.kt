@@ -7,7 +7,7 @@ import org.github.javiermf.fide2wikipedia.domain.model.SectionContents
 import org.github.javiermf.fide2wikipedia.domain.model.SectionDefinition
 import org.github.javiermf.fide2wikipedia.domain.service.NameMapper
 import org.github.javiermf.fide2wikipedia.infrastructure.filewriter.OutputLocalFileWriter
-import org.github.javiermf.fide2wikipedia.domain.service.wikipedia.WikiTableWriter
+import org.github.javiermf.fide2wikipedia.domain.service.wikipedia.GameSectionTableWriter
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
@@ -34,7 +34,7 @@ class WikiTableWriterTest {
         val clock = Clock.fixed(Instant.parse("2024-01-01T10:00:00Z"), ZoneId.of("UTC"))
         val outputFile = File(tempDir, "output.txt")
         val players = createDummyPlayers(3)
-        val writer = WikiTableWriter(OutputLocalFileWriter(outputFile),  nameMapper, clock)
+        val writer = GameSectionTableWriter(OutputLocalFileWriter(outputFile),  nameMapper, clock)
 
         writer.writeSection(SectionContents(players, SectionDefinition.OPEN_TOP, gameStyle, clock))
 
@@ -65,6 +65,7 @@ class WikiTableWriterTest {
     | {{FED}}
     | style="text-align:center" |2001
     |}
+    
     
     """.trimIndent()
     }

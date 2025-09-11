@@ -14,7 +14,7 @@ class FideDataXMLReader {
             val dataFetch = Persister().read(Players::class.java, File(filePath))
             dataFetch.players?.map {
                 DomainPlayer(
-                    name = it.name ?: "",
+                    name = it.fullName,
                     country = it.country ?: "",
                     sex = it.sex ?: "",
                     rating = it.rating ?: 0,
@@ -52,6 +52,7 @@ data class Player(
     private val firstname: String by lazy { if (nameSegments.size >= 2) nameSegments[1].trim() else "" }
     private val surname: String by lazy { if (nameSegments.isNotEmpty()) nameSegments[0].trim() else "" }
 
+    val fullName: String get() = "$firstname $surname".trim()
     val country: String? get() = if (countryOrig?.contains("FID") == true) "RUS" else countryOrig
 
     val isActive: Boolean get() = flag != "i"

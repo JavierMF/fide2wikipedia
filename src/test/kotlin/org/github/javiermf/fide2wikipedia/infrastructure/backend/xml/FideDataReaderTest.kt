@@ -39,10 +39,10 @@ class FideDataReaderTest {
         val players = reader.readFideData(tempFile.absolutePath)
 
         players.size shouldBe 2
-        players[0].name shouldBe "Carlsen, Magnus"
+        players[0].name shouldBe "Magnus Carlsen"
         players[0].country shouldBe "NOR"
         players[0].rating shouldBe 2850
-        players[1].name shouldBe "Caruana, Fabiano"
+        players[1].name shouldBe "Fabiano Caruana"
         players[1].country shouldBe "USA"
         players[1].rating shouldBe 2800
     }

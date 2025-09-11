@@ -18,15 +18,15 @@ class WikipediaTableWriter(
 
         output.writeContent("=== <u>${gameStyle.title}</u> ===\n")
 
-        val wikiTableWriter = WikiTableWriter(output, NameMapper(), clock)
+        val gameSectionTableWriter = GameSectionTableWriter(output, NameMapper(), clock)
         println("Writing open rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_TOP, gameStyle, clock))
+        gameSectionTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_TOP, gameStyle, clock))
         println("Writing women rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_TOP, gameStyle, clock))
+        gameSectionTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_TOP, gameStyle, clock))
         println("Writing junior open rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_JUV, gameStyle, clock))
+        gameSectionTableWriter.writeSection(SectionContents(players, SectionDefinition.OPEN_JUV, gameStyle, clock))
         println("Writing women open rating")
-        wikiTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_JUV, gameStyle, clock))
+        gameSectionTableWriter.writeSection(SectionContents(players, SectionDefinition.FEM_JUV, gameStyle, clock))
         println("Finished")
     }
 }
