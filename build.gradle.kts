@@ -23,7 +23,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("org.github.javiermf.fide2wikipedia.Fide2WikipediaKt")
+    mainClass.set("org.github.javiermf.fide2wikipedia.input.cli.Fide2WikipediaAppKt")
 }
 
 tasks.withType<KotlinCompile>().configureEach {
